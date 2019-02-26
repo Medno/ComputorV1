@@ -1,5 +1,8 @@
 import sys
 from sqrt import *
+from parser import parser
+from error import exit_message
+from print_poly import print_polynome
 
 """
 	Organisation:
@@ -26,59 +29,13 @@ OK	-> Get the polynomial
 		-> 
 """
 
-def handle_degrees(coeffs, i, array):
-	length = len(array)
-	if length <= i + 1 or (array[i + 1] and array[i + 1] != "^"):
-		if array[i + 1] == "+" or array[i + 1] == "-" or array[i + 1] == "=":
-			coeffs[1] = 1
-			return
-		print("Wrong syntax after : ", array[i])
-		sys.exit(1)
-	if length <= i + 2:
-		print("Wrong syntax after : ", array[i + 1])
-		sys.exit(1)
-	try:
-		coeffs[1] = float(array[i + 2])
-	except:
-		print("Wrong character in the expression : ", array[i])
-		sys.exit(1)
-
-def parser(polynome, expr):
-	i = 0
-	exploded = expr[0].split()
-	length = len(exploded)
-	while i < length:
-		neg = 0
-		coeffs = [0.0, 0.0]
-		print(i)
-		if exploded[i] == "+" or exploded[i] == "-" or exploded[i] == "=":
-			if exploded[i] == "-":
-				neg = 1
-			i += 1
-		if exploded[i] == "X":
-			handle_degrees(coeffs, i, exploded)
-			i += 1
-		else:
-			try:
-				coeffs[0] = float(exploded[i])
-				if neg == 1:
-					coeffs[0] *= -1
-				i += 1
-				if i < length and exploded[i] == "X":
-					handle_degrees(coeffs, i, exploded)
-			except:
-				print("Wrong character in the expression : ", exploded[i])
-				sys.exit(1)
-		polynome.append(coeffs)
-		print(polynome)
-		i += 1
-
-def main():
+def computor():
 	polynome = list()
 	expression = sys.argv[1:]
 	if len(expression) != 1:
-		print("Wrong number of parameters")
-		sys.exit(1)
+		exit_message("Wrong number of parameters")
 	parser(polynome, expression)
+	print(polynome)
+	print_polynome(polynome)
 
-main()
+computor()
