@@ -1,8 +1,9 @@
 import sys
-from sqrt import *
-from parser import parser
+from parser import parser, check_invalid_exponent
 from error import exit_message
-from print_poly import print_polynome
+from print_poly import *
+from refacto import refacto
+from resolver import resolve_polynome
 
 """
 	Organisation:
@@ -12,10 +13,10 @@ OK	-> Recode sqrt function
 OK	-> Get the polynomial
 		-> Split ?
 
-	-> Check valid characters (all digits, get an alpha and let's say that's the variable ?)
+OK	-> Check valid characters (all digits, get an alpha and let's say that's the variable ?)
 	
-	-> Put all factors on the left
-		-> Print it
+OK	-> Put all factors on the left
+OK		-> Print it
 	
 	-> Categorization of degrees
 		-> Structure like [[exp, coeff], ...]
@@ -35,7 +36,9 @@ def computor():
 	if len(expression) != 1:
 		exit_message("Wrong number of parameters")
 	parser(polynome, expression)
-	print(polynome)
-	print_polynome(polynome)
+	polynome = refacto(polynome)
+	print_refacto(polynome)
+	check_invalid_exponent(polynome)
+	resolve_polynome(polynome)
 
 computor()
