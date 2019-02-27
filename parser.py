@@ -1,4 +1,5 @@
 from error import exit_message
+from print_poly import print_poly
 
 def get_degree(coeffs, expr):
 	len_expr = len(expr)
@@ -6,12 +7,16 @@ def get_degree(coeffs, expr):
 		coeffs['exposant'] = 1
 		coeffs['coeff'] = 1 if coeffs['coeff'] == 0 else coeffs['coeff']
 		return
-	elif len_expr == 2:
+	elif len_expr == 2 or expr[2] == '-':
 		exit_message("Wrong syntax of power : ", expr)
 	after_power = expr[2:]
 	try:
-		degree = float(after_power)
-		coeffs['exposant'] = degree
+		isfloat = float(after_power)
+		isint = int(isfloat)
+		if isint != isfloat:
+			coeffs['exposant'] = isfloat
+		else:
+			coeffs['exposant'] = isint
 		return
 	except:
 		exit_message("Wrong syntax of power : ", expr)
@@ -35,7 +40,7 @@ def handle_multiplication(array, i, coeff, length):
 	if array[i] == "*":
 		i += 1
 	elif array[i] == "+" or array[i] == "-" or array[i] == "=":
-		return i
+		return i - 1
 	if array[i][0] == 'X':
 		get_degree(coeff, array[i])
 		return i
@@ -56,6 +61,10 @@ def parser(polynome, expr):
 		if exploded[i][0] == "X":
 			coeffs['coeff'] = 1;
 			get_degree(coeffs, exploded[i])
+			if neg == 1:
+				coeffs['coeff'] *= -1
+			if equal == 1:
+				coeffs['coeff'] *= -1
 		else:
 			try:
 				isfloat = float(exploded[i])
@@ -69,10 +78,18 @@ def parser(polynome, expr):
 				if equal == 1:
 					coeffs['coeff'] *= -1
 				i = handle_multiplication(exploded, i, coeffs, length)
-			except:
+			except ValueError:
 				exit_message("Wrong character in the expression : ", exploded[i])
-		polynome.append(coeffs)
+		if coeffs['coeff'] != 0:
+			polynome.append(coeffs)
 		i += 1
 	if equal == 0:
 		exit_message("There is no equal character in the expression")
+
+def check_invalid_exponent(poly):
+	for elmt in poly:
+		if elmt['exposant'] > 2:
+			exit_message("The polynomial degree is stricly greater than 2, I can't solve.")
+		if elmt['exposant'] != 0 and elmt['exposant'] != 1 and elmt['exposant'] != 2:
+			exit_message("Cannot resolve polynoms with exponent : " + str(elmt['exposant']))
 

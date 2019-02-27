@@ -1,25 +1,26 @@
-def print_polynome(polynome):
+def print_poly(poly):
 	res = ""
-	length = len(polynome)
-	for element in polynome:
-		if element != polynome[0] and element != polynome[length - 1]:
-			res += "+ " if element['coeff'] >= 0 else "- "
-		if element['coeff'] > 1 or element['coeff'] < -1 or \
-			(element['coeff'] == 1 and element['exposant'] == 0):
-			if element['coeff'] < 0:
-				res += "- " + str(-1 * element['coeff']) + " "
-			else:
-				res += str(element['coeff'])
-			if element['coeff'] > 1 and element['exposant'] > 0:
-				res += " * "
-		if element['exposant'] != 0:
+	length = len(poly)
+	if length == 0:
+		res += "0 "
+	for elmt in poly:
+		if elmt['coeff'] < 0:
+			res += "- "
+		elif elmt != poly[0]:
+			res += "+ "
+		if elmt['exposant'] != 0 and abs(elmt['coeff']) != 1:
+			res += str(abs(elmt['coeff'])) + " * "
+		if elmt['exposant'] == 0:
+			res += str(abs(elmt['coeff']))
+		if elmt['exposant'] != 0:
 			res += "X"
-			if element['exposant'] > 1:
-				res += "^"
-				res += str(int(element['exposant']))
-
-		if element != polynome[length - 1]:
-			res += " "
+		if elmt['exposant'] > 1:
+			res += "^" + str(elmt['exposant'])
+		res += " "
 	res += "= 0"
-	print(res)
+	return res
 
+def print_refacto(poly):
+	print("Reduced form: " + print_poly(poly))
+	degree = "0" if len(poly) == 0 else str(poly[-1]['exposant'])
+	print("Polynomial degree: " + degree)
