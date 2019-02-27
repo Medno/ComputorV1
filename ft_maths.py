@@ -5,3 +5,8 @@ def sqrt(n):
 		e = x
 		x = (x + (n / x)) / 2
 	return x
+
+def pgcd(x, y):
+	while y:
+		x, y = y, x % y
+	return x
