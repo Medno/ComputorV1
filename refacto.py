@@ -25,11 +25,11 @@ def refacto(poly):
 def refacto_sqrt(disc):
 	if disc <= 2:
 		return 1, disc
-	i = 2
+	i = 2.0
 	while i < disc / 2:
 		div = disc / i
 		tmp = sqrt(div)
 		if int(tmp) == float(tmp):
-			return div, i
+			return int(tmp), int(i)
 		i += 1
 	return 1, disc
