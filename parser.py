@@ -68,7 +68,7 @@ def parser(polynome, expr):
 		else:
 			try:
 				isfloat = float(exploded[i])
-				isint = int(exploded[i])
+				isint = int(isfloat)
 				if isint != isfloat:
 					coeffs['coeff'] = isfloat
 				else:
