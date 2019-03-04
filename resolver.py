@@ -73,7 +73,7 @@ def resolve_second_degree(poly):
 		
 def resolve_polynome(polynome):
 	if len(polynome) == 0:
-		print("All real number are solutions")
+		print("All real numbers are solutions")
 	elif polynome[-1]['exposant'] == 0:
 		print("There is no solution")
 	elif polynome[-1]['exposant'] == 1:

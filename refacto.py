@@ -12,6 +12,8 @@ def refacto(poly):
 			coeff = elmt
 		else:
 			coeff['coeff'] += elmt['coeff']
+	if coeff == {}:
+		return new_poly
 	new_poly.append(coeff)
 	poly = [elmt for elmt in new_poly if elmt['coeff'] != 0]
 	if len(poly) > 0 and poly[-1]['exposant'] != 0:
