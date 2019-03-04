@@ -4,14 +4,18 @@ from refacto import refacto_sqrt
 from print_solutions import print_unfactored_solution, print_factored_solution
 
 def resolve_first_degree(poly):
-	zero_degree = poly[0] if poly[0]['exposant'] == 0 else {'coeff': 0,'exposant': 0}
-	result = -1 * float(zero_degree['coeff']) / float(poly[1]['coeff'])
+	z_degree = poly[0] if poly[0]['exposant'] == 0 else {'coeff': 0,'exposant': 0}
+	f_degree = poly[0] if poly[0]['exposant'] == 1 else poly[1]
+	gcd = pgcd(float(z_degree['coeff']), float(f_degree['coeff']))
+	gcd = long(gcd) if long(gcd) == float(gcd) else 1
+	result = -1 * float(z_degree['coeff']) / float(f_degree['coeff'])
 	print("The solution is :")
-	if float(result) == int(result):
-		print(int(result))
+	if float(result) == long(result):
+		print(long(result))
 	else:
 		print(result)
-		print("That can be written as: " + str(-1 * zero_degree['coeff']) + " / " + str(poly[1]['coeff']))
+		print("That can be written as: " + str((-1 * z_degree['coeff']) / gcd) +\
+		" / " + str(f_degree['coeff'] / gcd))
 
 def resolve_second_degree(poly):
 	z_degree = next((elmt for elmt in poly if elmt['exposant'] == 0), {'coeff': 0, 'exposant': 0})
@@ -29,7 +33,7 @@ def resolve_second_degree(poly):
 	if discriminant == 0:
 		print("Discriminant is nil, the unique solution is:")
 		result = -1.0 * b / (2.0 * a)
-		if float(result) == int(result):
+		if float(result) == long(result):
 			print(int(result))
 		else:
 			print(result)
@@ -41,16 +45,16 @@ def resolve_second_degree(poly):
 		div, root = refacto_sqrt(discriminant)
 		gcd = reduce(lambda x, y: pgcd(x, y), [-1.0 * b, div, 2 * a]) if div > 1 else 1
 		print_unfactored_solution(a, b, abs(discriminant), 1)
-		if float(x1) == int(x1):
-			print(int(x1))
+		if float(x1) == long(x1):
+			print(long(x1))
 		else:
 			if discriminant != root:
 				print_factored_solution(a, b, div, root, gcd, 1, 0)
 			print(x1)
 
 		print_unfactored_solution(a, b, abs(discriminant), 0)
-		if float(x2) == int(x2):
-			print(int(x2))
+		if float(x2) == long(x2):
+			print(long(x2))
 		else:
 			if discriminant != root:
 				print_factored_solution(a, b, div, root, gcd, 0, 0)

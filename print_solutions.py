@@ -12,7 +12,7 @@ def print_refactored_sqrt(a, b, div, root, gcd, first, comp, is_fract):
 
 def print_factored_solution(a, b, div, root, gcd, first, comp):
 	print_refactored_sqrt(a, b, div, root, 1, first, comp, 1)
-	if int(gcd != float(gcd)):
+	if long(gcd) != float(gcd):
 		gcd = 1
 	else:
 		gcd = int(gcd)

@@ -1,5 +1,6 @@
 from error import exit_message
 from print_poly import print_poly
+import sys
 
 def get_degree(coeffs, expr):
 	len_expr = len(expr)
@@ -12,7 +13,7 @@ def get_degree(coeffs, expr):
 	after_power = expr[2:]
 	try:
 		isfloat = float(after_power)
-		isint = int(isfloat)
+		isint = long(isfloat)
 		if isint != isfloat:
 			coeffs['exposant'] = isfloat
 		else:
@@ -68,10 +69,10 @@ def parser(polynome, expr):
 		else:
 			try:
 				isfloat = float(exploded[i])
-				isint = int(isfloat)
-				if isint != isfloat:
+				if round(isfloat, 0) != isfloat:
 					coeffs['coeff'] = isfloat
 				else:
+					isint = long(isfloat)
 					coeffs['coeff'] = isint
 				if neg == 1:
 					coeffs['coeff'] *= -1
