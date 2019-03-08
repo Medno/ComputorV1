@@ -68,6 +68,8 @@ def parser(polynome, expr):
 				coeffs['coeff'] *= -1
 		else:
 			try:
+				if exploded[i][0] == 'i':
+					raise ValueError
 				isfloat = float(exploded[i])
 				if round(isfloat, 0) != isfloat:
 					coeffs['coeff'] = isfloat
